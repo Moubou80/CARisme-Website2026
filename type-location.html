@@ -291,7 +291,9 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      body { overflow: auto; }
+      body { overflow: auto; height: auto; min-height: 100vh; }
+
+      .page { height: auto; min-height: 100vh; }
 
       .panels {
         grid-template-columns: 1fr;
@@ -300,12 +302,21 @@
       .panels::after { display: none; }
 
       .panel {
-        padding: 2.5rem 1.5rem;
+        padding: 3rem 1.5rem 2.5rem;
         border-bottom: 1px solid var(--warm);
+        justify-content: flex-start;
+        gap: 1.4rem;
       }
       .panel:last-child { border-bottom: none; }
 
-      .panel-image { max-width: 100%; }
+      .panel-image {
+        max-width: 100%;
+        aspect-ratio: 4 / 3;
+      }
+
+      .panel-title {
+        font-size: clamp(1.3rem, 5vw, 1.7rem);
+      }
 
       .page-header { padding: 4.5rem 1.5rem 1.5rem; }
 
