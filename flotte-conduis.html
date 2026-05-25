@@ -60,7 +60,7 @@
 
     /* ── NAVIGATION ── */
     .back-link {
-      position: fixed;
+      position: absolute;
       top: 2rem;
       left: 2.5rem;
       z-index: 100;
@@ -88,11 +88,8 @@
     .back-link:hover::before { transform: translateX(-4px); }
 
     .logo {
-      position: fixed;
-      top: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
+      display: block;
+      text-align: center;
       font-family: var(--serif);
       font-size: 1.1rem;
       font-weight: 400;
@@ -107,7 +104,7 @@
     /* ── EN-TÊTE ── */
     .page-header {
       text-align: center;
-      padding: 7rem 2rem 3rem;
+      padding: 2rem 2rem 3rem;
       opacity: 0;
       animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
     }
@@ -154,14 +151,17 @@
 
     /* En-tête de la carte */
     .car-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
       margin-bottom: 1.8rem;
-      gap: 1rem;
     }
 
     .car-identity { display: flex; flex-direction: column; gap: 0.2rem; }
+
+    .car-model-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
     .car-brand {
       font-family: var(--sans);
@@ -267,10 +267,9 @@
     @media (max-width: 768px) {
       .back-link { top: 1.2rem; left: 1.2rem; }
       .logo { font-size: 0.9rem; }
-      .page-header { padding: 5.5rem 1.5rem 2rem; }
+      .page-header { padding: 1rem 1.5rem 2rem; }
       .fleet { padding: 1rem 1.2rem 4rem; }
-      .car-header { flex-direction: column; gap: 0.5rem; }
-      .car-price { align-self: flex-start; }
+      .car-model-row { flex-direction: column; gap: 0.3rem; }
       .car-card { padding: 2.5rem 0 3rem; }
       .car-image-wrap { aspect-ratio: 4 / 3; }
     }
@@ -281,8 +280,10 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
 
-  <a href="type-location.html" class="back-link">Retour</a>
-  <a href="index.html" class="logo">Carisme</a>
+  <nav style="position:relative; display:flex; align-items:center; justify-content:center; padding:2rem 2.5rem;">
+    <a href="type-location.html" class="back-link">Retour</a>
+    <a href="index.html" class="logo">Carisme</a>
+  </nav>
 
   <!-- EN-TÊTE -->
   <div class="page-header">
@@ -299,12 +300,14 @@
       <div class="car-header">
         <div class="car-identity">
           <span class="car-brand">Audi</span>
-          <h2 class="car-model">RS3 Sportback</h2>
+          <div class="car-model-row">
+            <h2 class="car-model">RS3 Sportback</h2>
+            <div class="car-price"><strong>40€</strong> / jour</div>
+          </div>
         </div>
-        <div class="car-price"><strong>40€</strong> / jour</div>
       </div>
       <div class="car-image-wrap">
-        <img src="images/rs3-daytona.jpg" alt="Audi RS3 Sportback">
+        <img src="images/audi-rs3-20260520.jpg" alt="Audi RS3 Sportback">
       </div>
       <div class="car-footer">
         <a href="#" class="car-cta"><span>Oh Yeah !</span></a>
