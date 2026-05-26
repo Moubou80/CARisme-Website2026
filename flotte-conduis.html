@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CARISME — Je conduis</title>
+  <meta name="description" content="CARISME — Découvrez notre flotte de véhicules de prestige disponibles à la location à Paris.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:    #F5F0E8;
+      --warm:     #EDE5D5;
+      --gold:     #B8965A;
+      --gold-lt:  #D4AF74;
+      --dark:     #1A1612;
+      --charcoal: #2C2620;
+      --muted:    rgba(26,22,18,0.45);
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Jost', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSEUR ── */
+    .cursor {
+      width: 8px; height: 8px; background: var(--gold);
+      border-radius: 50%; position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform .1s, width .3s, height .3s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px; border: 1px solid var(--gold);
+      border-radius: 50%; position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform .12s ease-out, width .3s, height .3s, opacity .3s;
+      opacity: .6;
+    }
+
+    /* ── HEADER ── */
+    .back-link {
+      position: fixed; top: 2rem; left: 2.5rem; z-index: 100;
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--sans); font-size: .68rem; font-weight: 400;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--dark); text-decoration: none;
+      opacity: 0; animation: fadeIn .8s ease .2s forwards;
+      transition: color .2s;
+    }
+    .back-link::before {
+      content: '←'; font-size: .9rem; color: var(--gold);
+      transition: transform .2s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .back-link:hover::before { transform: translateX(-4px); }
+
+    .logo {
+      position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 100; font-family: var(--serif); font-size: 1.1rem;
+      font-weight: 400; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--dark); text-decoration: none;
+      opacity: 0; animation: fadeIn .8s ease .2s forwards;
+    }
+
+    /* ── EN-TÊTE PAGE ── */
+    .page-header {
+      text-align: center;
+      padding: 8rem 2rem 3rem;
+      position: relative;
+    }
+    .page-eyebrow {
+      font-family: var(--sans); font-size: .65rem; font-weight: 400;
+      letter-spacing: .35em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1rem;
+      opacity: 0; animation: slideUp 1s cubic-bezier(.16,1,.3,1) .3s forwards;
+    }
+    .page-title {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 500; letter-spacing: .04em; color: var(--dark);
+      opacity: 0; animation: slideUp 1s cubic-bezier(.16,1,.3,1) .45s forwards;
+    }
+    .page-divider {
+      width: 50px; height: 1px; background: var(--gold);
+      margin: 1.2rem auto 0;
+      opacity: 0; animation: expandLine .8s ease .7s forwards;
+    }
+
+    /* ── GRILLE DE VOITURES ── */
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2px;
+      background: rgba(184,150,90,.12);
+      margin: 3rem 0;
+      border-top: 1px solid rgba(184,150,90,.2);
+      border-bottom: 1px solid rgba(184,150,90,.2);
+    }
+
+    .car-card {
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      padding: 2.8rem 3rem;
+      gap: 1.6rem;
+      opacity: 0; animation: fadeIn 1s ease forwards;
+      transition: background .4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .car-card:hover { background: var(--warm); }
+
+    /* Numéro discret */
+    .car-card-num {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 700;
+      color: rgba(184,150,90,.08); line-height: 1; pointer-events: none;
+      user-select: none;
+    }
+
+    .car-brand {
+      font-family: var(--sans); font-size: .62rem; font-weight: 400;
+      letter-spacing: .35em; text-transform: uppercase; color: var(--gold);
+    }
+    .car-name {
+      font-family: var(--serif); font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+      font-weight: 500; color: var(--dark); line-height: 1.2;
+    }
+    .car-sub {
+      font-family: var(--sans); font-size: .78rem; font-weight: 300;
+      letter-spacing: .08em; color: var(--muted); text-transform: uppercase;
+    }
+
+    .car-photo {
+      width: 100%; aspect-ratio: 16/9; overflow: hidden;
+      position: relative; background: var(--charcoal);
+    }
+    .car-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .7s cubic-bezier(.25,.46,.45,.94);
+      display: block;
+    }
+    .car-card:hover .car-photo img { transform: scale(1.05); }
+
+    /* Tarif rapide */
+    .car-price {
+      display: flex; gap: 2rem; align-items: baseline;
+    }
+    .car-price-item {
+      display: flex; flex-direction: column; gap: .2rem;
+    }
+    .car-price-amount {
+      font-family: var(--serif); font-size: 1.4rem;
+      color: var(--dark); font-weight: 500;
+    }
+    .car-price-label {
+      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .car-price-sep {
+      width: 1px; height: 2rem; background: rgba(184,150,90,.3);
+      align-self: center;
+    }
+
+    /* CTA */
+    .car-cta {
+      display: inline-block; align-self: flex-start;
+      font-family: var(--sans); font-size: .7rem; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--dark); text-decoration: none;
+      padding: .9rem 2.4rem; border: 1px solid var(--gold);
+      position: relative; overflow: hidden; transition: color .4s;
+    }
+    .car-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform .4s ease;
+    }
+    .car-cta:hover::before { transform: scaleX(1); }
+    .car-cta:hover { color: var(--cream); }
+    .car-cta span { position: relative; z-index: 1; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid rgba(184,150,90,.18);
+    }
+    .page-footer-logo {
+      font-family: var(--serif); font-size: 1.4rem; letter-spacing: .35em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .page-footer-sub {
+      font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--muted); margin-top: .5rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn  { from { opacity:0 } to { opacity:1 } }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(28px) }
+      to   { opacity:1; transform:translateY(0) }
+    }
+    @keyframes expandLine {
+      from { opacity:0; width:0 }
+      to   { opacity:1; width:50px }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .fleet-grid { grid-template-columns: 1fr; }
+      .car-card { padding: 2rem 1.5rem; }
+      .back-link { top: 1.2rem; left: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <a href="type-location.html" class="back-link">Retour</a>
+  <a href="index.html" class="logo">Carisme</a>
+
+  <div class="page-header">
+    <div class="page-eyebrow">Flotte · Paris</div>
+    <h1 class="page-title">Choisissez votre monture</h1>
+    <div class="page-divider"></div>
+  </div>
+
+  <div class="fleet-grid">
+
+    <!-- ── Audi RS3 ── -->
+    <article class="car-card" style="animation-delay:.5s">
+      <div class="car-card-num">01</div>
+      <div>
+        <div class="car-brand">Audi</div>
+        <h2 class="car-name">RS3 Sportback</h2>
+        <p class="car-sub">TFSI Quattro 294&nbsp;kW · 400&nbsp;cv</p>
+      </div>
+      <div class="car-photo">
+        <img src="images/rs3-avant.png" alt="Audi RS3 Sportback" loading="lazy">
+      </div>
+      <div class="car-price">
+        <div class="car-price-item">
+          <span class="car-price-amount">40 €</span>
+          <span class="car-price-label">/ journée</span>
+        </div>
+        <div class="car-price-sep"></div>
+        <div class="car-price-item">
+          <span class="car-price-amount">3 000 €</span>
+          <span class="car-price-label">/ mois</span>
+        </div>
+      </div>
+      <a href="rs3-detail.html" class="car-cta"><span>Oh Yeah&nbsp;!</span></a>
+    </article>
+
+  </div>
+
+  <footer class="page-footer">
+    <div class="page-footer-logo">Carisme</div>
+    <div class="page-footer-sub">Location &amp; Abonnement · Paris</div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setTimeout(() => {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top  = e.clientY + 'px';
+      }, 80);
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width  = '14px'; cursor.style.height = '14px';
+        ring.style.width    = '56px'; ring.style.height   = '56px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width  = '8px';  cursor.style.height = '8px';
+        ring.style.width    = '36px'; ring.style.height   = '36px';
+      });
+    });
+  </script>
+
+</body>
+</html>
