@@ -576,5 +576,79 @@
     </div>
   </footer>
 
+  <!-- ── BANDEAU COOKIES RGPD ── -->
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #1A1612;
+      border-top: 1px solid rgba(184,150,90,0.35);
+      padding: 1rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      z-index: 99999;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(245,240,232,0.65);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #cookie-banner.cb-visible { transform: translateY(0); }
+    #cookie-banner.cb-hiding  { transform: translateY(110%); }
+    #cookie-banner p { flex: 1; margin: 0; }
+    #cookie-banner a { color: #B8965A; text-decoration: none; }
+    #cookie-banner a:hover { text-decoration: underline; cursor: pointer; }
+    .cb-btn {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(184,150,90,0.45);
+      background: transparent;
+      color: rgba(245,240,232,0.65);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .cb-btn:hover { border-color: #B8965A; color: #B8965A; }
+    .cb-btn.cb-accept { background: #B8965A; border-color: #B8965A; color: #1A1612; }
+    .cb-btn.cb-accept:hover { background: #D4AF74; border-color: #D4AF74; }
+    @media (max-width: 600px) {
+      #cookie-banner { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.5rem; }
+    }
+  </style>
+  <div id="cookie-banner">
+    <p>CARisme utilise des cookies pour améliorer votre expérience.&nbsp; <a href="politique-confidentialite.html">En savoir plus</a></p>
+    <div style="display:flex;gap:.8rem;flex-shrink:0">
+      <button class="cb-btn cb-accept" id="cb-accept">Accepter</button>
+      <button class="cb-btn"           id="cb-refuse">Refuser</button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      if (localStorage.getItem('carisme_cookies')) return;
+      var b = document.getElementById('cookie-banner');
+      b.style.display = 'flex';
+      setTimeout(function () { b.classList.add('cb-visible'); }, 120);
+      function dismiss() {
+        b.classList.add('cb-hiding');
+        b.classList.remove('cb-visible');
+        setTimeout(function () { b.style.display = 'none'; }, 520);
+      }
+      document.getElementById('cb-accept').addEventListener('click', function () {
+        localStorage.setItem('carisme_cookies', 'accepted'); dismiss();
+      });
+      document.getElementById('cb-refuse').addEventListener('click', function () {
+        localStorage.setItem('carisme_cookies', 'refused'); dismiss();
+      });
+    })();
+  </script>
+
 </body>
 </html>
