@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0FLSM78CM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y0FLSM78CM');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CARISME — Type de location</title>
@@ -323,6 +331,64 @@
       .back-link { top: 1.2rem; left: 1.2rem; }
       .logo { font-size: 0.9rem; }
     }
+
+    /* ── FOOTER ── */
+    footer.site-footer {
+      background: var(--dark);
+      padding: 4rem 3rem 2.5rem;
+      position: relative;
+    }
+    footer.site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-logo {
+      font-family: var(--serif); font-size: 1.8rem; font-weight: 400;
+      letter-spacing: 0.3em; color: var(--gold);
+      text-align: center; margin-bottom: 3rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-col-title {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .footer-social { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-social a {
+      font-size: 0.8rem; color: rgba(245,240,232,0.5); text-decoration: none;
+      letter-spacing: 0.08em; transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .footer-social a:hover { color: var(--gold); }
+    .footer-social a::before {
+      content: '→'; font-size: 0.7rem; color: var(--gold);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .footer-social a:hover::before { opacity: 1; }
+    .footer-contact p {
+      font-size: 0.8rem; color: rgba(245,240,232,0.5);
+      line-height: 2; letter-spacing: 0.05em;
+    }
+    .footer-contact a { color: rgba(245,240,232,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-legal { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-legal a {
+      font-size: 0.78rem; color: rgba(245,240,232,0.5); text-decoration: none;
+      letter-spacing: 0.05em; transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,240,232,0.08);
+      padding-top: 1.5rem; text-align: center;
+      font-size: 0.7rem; color: rgba(245,240,232,0.25); letter-spacing: 0.1em;
+    }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
   </style>
 </head>
 <body>
@@ -401,5 +467,41 @@
       });
     });
   </script>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">CARISME</div>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-col-title">Nous suivre</div>
+          <div class="footer-social">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Snapchat</a>
+            <a href="#">TikTok</a>
+          </div>
+        </div>
+        <div class="footer-contact">
+          <div class="footer-col-title">Nous contacter</div>
+          <p>
+            Orgeval, Île-de-France<br>
+            <a href="tel:+33778472798">07 78 47 27 98</a><br>
+            <a href="mailto:contact@carisme.fr">contact@carisme.fr</a>
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Informations</div>
+          <div class="footer-legal">
+            <a href="#">Mentions légales</a>
+            <a href="#">CGV</a>
+            <a href="#">Politique de confidentialité</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 CARISME — Tous droits réservés</div>
+    </div>
+  </footer>
+
 </body>
 </html>
