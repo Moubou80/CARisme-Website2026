@@ -26,6 +26,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://carisme.fr/golf-detail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://carisme.fr/troc-detail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://carisme.fr/cupra-detail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://carisme.fr/clio-gris-detail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://carisme.fr/clio-noire-detail.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://carisme.fr/mentions-legales.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
