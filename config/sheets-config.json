@@ -1,0 +1,17 @@
+{
+  "service_account": "carisme-automatisation@gen-lang-client-0273010512.iam.gserviceaccount.com",
+  "sheets": {
+    "waitlist_montres": {
+      "id": "1OucX8WEPTz9GgacZYPTwPBsUhI0phm8Xhzc11czA0Wc",
+      "title": "CARisme Waitlist Montres",
+      "url": "https://docs.google.com/spreadsheets/d/1OucX8WEPTz9GgacZYPTwPBsUhI0phm8Xhzc11czA0Wc",
+      "columns": ["Date", "Prénom", "Email", "Montre 1", "Montre 2", "Montre 3"]
+    },
+    "waitlist_sacs": {
+      "id": "17gD4gwA0CJhK-ODML3vuhW8vHZKAtGYXkUHWFXuBrHQ",
+      "title": "CARisme Waitlist Sacs",
+      "url": "https://docs.google.com/spreadsheets/d/17gD4gwA0CJhK-ODML3vuhW8vHZKAtGYXkUHWFXuBrHQ",
+      "columns": ["Date", "Prénom", "Email", "Sac 1", "Sac 2", "Sac 3"]
+    }
+  }
+}
