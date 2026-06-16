@@ -12,6 +12,7 @@
 - 100 % **statique** : HTML + CSS + JS (pas de framework, pas de build).
 - Servi par **nginx**, déploiement **automatique via Coolify** : un `git push` sur `main` suffit. **Aucune étape manuelle.**
 - Flux : modifier → `git add -A` → `git commit` → `git push`.
+- Toujours `git pull` au début, avant toute modif (repo multi-machines, GitHub = source de vérité).
 
 ## 3. Structure des fichiers
 - Accueil : `index.html`
@@ -47,6 +48,7 @@
 ## 8. Pipeline images
 - Visuels générés via **Gemini** (`gemini-3.1-flash-image-preview`) orchestré par n8n, puis publiés (GitHub → Coolify).
 - Style attendu : **photographie automobile premium**, cohérente avec l'univers luxe (lumière soignée, fonds sobres, accents or).
+- Les images générées par le studio Telegram arrivent dans `images/<slug>.jpg` — pour en intégrer une, référencer ce chemin exact (le slug est renvoyé par le bot).
 
 ## 9. Données société (publiques — pages légales)
 - **CARisme**, SAS — **RCS Versailles 993 656 404**.
