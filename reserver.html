@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Réserver — CARISME</title>
+  <meta name="description" content="Réservez votre véhicule CARisme en quelques instants — location à la journée, paiement sécurisé.">
+  <!-- Page transactionnelle : ne pas indexer -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:    #F5F0E8;
+      --warm:     #EDE5D5;
+      --gold:     #B8965A;
+      --gold-lt:  #D4AF74;
+      --dark:     #1A1612;
+      --charcoal: #2C2620;
+      --muted:    rgba(245,240,232,0.45);
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Jost', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--cream);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a, button { cursor: pointer; }
+
+    /* ── HEADER ── */
+    .back-link {
+      position: fixed; top: 2rem; left: 2.5rem; z-index: 100;
+      display: flex; align-items: center; gap: .6rem;
+      font-family: var(--sans); font-size: .68rem; font-weight: 400;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--cream); text-decoration: none;
+      opacity: 0; animation: fadeIn .8s ease .2s forwards;
+      transition: color .2s;
+    }
+    .back-link::before {
+      content: '←'; font-size: .9rem; color: var(--gold);
+      transition: transform .2s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .back-link:hover::before { transform: translateX(-4px); }
+
+    .logo {
+      position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
+      z-index: 100; font-family: var(--serif); font-size: 1.1rem;
+      font-weight: 400; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--cream); text-decoration: none;
+      opacity: 0; animation: fadeIn .8s ease .2s forwards;
+    }
+
+    .gold-line-short {
+      width: 60px; height: 1px; background: var(--gold);
+      margin: 1.4rem auto;
+    }
+
+    /* ── WRAPPER ── */
+    main {
+      flex: 1 0 auto;
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 9rem 6vw 5rem;
+    }
+
+    .resa-head { text-align: center; margin-bottom: 3rem; }
+    .resa-label {
+      font-family: var(--sans); font-size: .62rem; font-weight: 400;
+      letter-spacing: .35em; text-transform: uppercase; color: var(--gold);
+    }
+    .resa-title {
+      font-family: var(--serif); font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 500; color: var(--cream); line-height: 1.15;
+      margin-top: 1rem;
+    }
+    .resa-title em { font-style: italic; color: var(--gold-lt); }
+    .resa-modele {
+      font-family: var(--serif); font-size: clamp(.95rem, 2vw, 1.3rem);
+      font-weight: 400; font-style: italic; letter-spacing: .04em;
+      color: var(--gold-lt); line-height: 1.3; margin-top: .8rem;
+    }
+    .resa-intro {
+      font-size: .82rem; color: var(--muted);
+      letter-spacing: .04em; line-height: 1.7; margin-top: 1.2rem;
+    }
+
+    /* ── FORMULAIRE ── */
+    .resa-form {
+      display: flex; flex-direction: column; gap: 1.6rem;
+      border: 1px solid rgba(184,150,90,.22);
+      padding: 2.6rem 2.4rem;
+      background: rgba(44,38,32,.35);
+    }
+    .field { display: flex; flex-direction: column; gap: .55rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    label {
+      font-family: var(--sans); font-size: .62rem; font-weight: 400;
+      letter-spacing: .25em; text-transform: uppercase; color: var(--gold);
+    }
+    input, select {
+      font-family: var(--sans); font-size: .92rem; font-weight: 300;
+      color: var(--cream);
+      background: transparent;
+      border: none; border-bottom: 1px solid rgba(184,150,90,.3);
+      padding: .55rem .1rem; letter-spacing: .03em;
+      transition: border-color .3s;
+    }
+    input::placeholder { color: rgba(245,240,232,.3); }
+    input:focus, select:focus { outline: none; border-bottom-color: var(--gold); }
+    input[type="date"], input[type="time"] { color-scheme: dark; }
+    select { color-scheme: dark; cursor: pointer; }
+
+    /* Sélecteur d'heure (heure seule, unité « h » dans les options) */
+    .time-selects { display: flex; align-items: center; gap: .5rem; }
+    .time-selects select { flex: 1; min-width: 0; }
+
+    /* Champ numérique avec unité fixe à droite (ex. « km ») */
+    .input-suffix {
+      display: flex; align-items: baseline; gap: .5rem;
+      border-bottom: 1px solid rgba(184,150,90,.3);
+      transition: border-color .3s;
+    }
+    .input-suffix input { flex: 1; min-width: 0; border-bottom: none; }
+    .input-suffix:focus-within { border-bottom-color: var(--gold); }
+    .suffix-unit {
+      font-family: var(--sans); font-size: .85rem; font-weight: 300;
+      color: var(--gold); letter-spacing: .04em; flex-shrink: 0;
+    }
+
+    /* Champs photo (permis) */
+    .file-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .file-btn {
+      flex: 1 1 0; min-width: 0;
+      font-family: var(--sans); font-size: .68rem; font-weight: 400;
+      letter-spacing: .08em; text-transform: none;
+      color: var(--cream); background: transparent;
+      border: 1px dashed rgba(184,150,90,.45);
+      padding: .8rem .7rem; text-align: center; cursor: pointer;
+      transition: border-color .3s, color .3s;
+    }
+    .file-btn:hover { border-color: var(--gold); color: var(--gold-lt); }
+    .file-input { display: none; }
+    .file-preview {
+      margin-top: .7rem; width: 100%; max-height: 150px;
+      object-fit: cover; border: 1px solid rgba(184,150,90,.3);
+      display: block;
+    }
+
+    /* ── ESTIMATION ── */
+    .estimation {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 1rem; margin-top: .4rem;
+      padding: 1.3rem 0 .3rem;
+      border-top: 1px solid rgba(184,150,90,.22);
+    }
+    .estimation-label {
+      font-family: var(--sans); font-size: .65rem; font-weight: 400;
+      letter-spacing: .25em; text-transform: uppercase; color: var(--muted);
+    }
+    .estimation-value {
+      font-family: var(--serif); font-size: 1.7rem; font-weight: 500;
+      font-style: italic; color: var(--gold);
+    }
+    .estimation-note {
+      font-size: .68rem; color: var(--muted);
+      letter-spacing: .03em; line-height: 1.6; margin-top: -.4rem;
+    }
+
+    /* ── MESSAGES ── */
+    .resa-msg {
+      font-size: .78rem; letter-spacing: .03em; line-height: 1.6;
+      padding: .9rem 1.1rem; border: 1px solid; display: none;
+    }
+    .resa-msg.show { display: block; }
+    .resa-msg.error   { color: #E8B4A8; border-color: rgba(232,180,168,.4); background: rgba(232,180,168,.06); }
+    .resa-msg.success { color: var(--gold-lt); border-color: rgba(184,150,90,.4); background: rgba(184,150,90,.08); }
+
+    /* ── BOUTON ── */
+    .resa-cta {
+      font-family: var(--sans); font-size: .72rem; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--cream);
+      padding: 1.05rem 2.4rem; border: 1px solid var(--gold);
+      background: transparent; position: relative; overflow: hidden;
+      transition: color .4s; margin-top: .5rem; width: 100%;
+    }
+    .resa-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform .4s ease;
+    }
+    .resa-cta:hover:not(:disabled)::before { transform: scaleX(1); }
+    .resa-cta:hover:not(:disabled) { color: var(--dark); }
+    .resa-cta span { position: relative; z-index: 1; }
+    .resa-cta:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── ÉTAT D'ERREUR (véhicule inconnu) ── */
+    .resa-error-state { text-align: center; }
+    .resa-error-state .resa-cta { width: auto; display: inline-block; }
+
+    /* ── FOOTER ── */
+    footer.site-footer {
+      flex-shrink: 0;
+      background: var(--dark);
+      padding: 4rem 3rem 2.5rem;
+      position: relative;
+    }
+    footer.site-footer::before {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-logo {
+      font-family: var(--serif); font-size: 1.8rem; font-weight: 400;
+      letter-spacing: 0.3em; color: var(--gold);
+      text-align: center; margin-bottom: 3rem;
+    }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-col-title {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .footer-social { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-social a {
+      font-size: 0.8rem; color: rgba(245,240,232,0.5); text-decoration: none;
+      letter-spacing: 0.08em; transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .footer-social a:hover { color: var(--gold); }
+    .footer-social a::before {
+      content: '→'; font-size: 0.7rem; color: var(--gold);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .footer-social a:hover::before { opacity: 1; }
+    .footer-contact p {
+      font-size: 0.8rem; color: rgba(245,240,232,0.5);
+      line-height: 2; letter-spacing: 0.05em;
+    }
+    .footer-contact a { color: rgba(245,240,232,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-legal { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-legal a {
+      font-size: 0.78rem; color: rgba(245,240,232,0.5); text-decoration: none;
+      letter-spacing: 0.05em; transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,240,232,0.08);
+      padding-top: 1.5rem; text-align: center;
+      font-size: 0.7rem; color: rgba(245,240,232,0.25); letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      main { padding: 8rem 5vw 3.5rem; }
+      .back-link { top: 1.2rem; left: 1.2rem; }
+      .resa-form { padding: 2rem 1.4rem; }
+      .field-row { grid-template-columns: 1fr; gap: 1.6rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-link" id="back-link">Retour</a>
+  <a href="index.html" class="logo">Carisme</a>
+
+  <main>
+    <div class="resa-head">
+      <div class="resa-label">Réservation</div>
+      <h1 class="resa-title" id="resa-constructeur">&nbsp;</h1>
+      <p class="resa-modele" id="resa-modele">&nbsp;</p>
+      <div class="gold-line-short"></div>
+      <p class="resa-intro">Location à la journée — réglez en ligne, en toute sérénité.</p>
+    </div>
+
+    <!-- État : véhicule inconnu / absent -->
+    <div class="resa-error-state" id="error-state" style="display:none">
+      <p class="resa-intro" id="error-text" style="color:var(--cream)"></p>
+      <a href="index.html" class="resa-cta" style="margin-top:1.6rem"><span>Voir nos véhicules</span></a>
+    </div>
+
+    <!-- Formulaire -->
+    <form class="resa-form" id="resa-form" style="display:none" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="dateDebut">Date de début</label>
+          <input type="date" id="dateDebut" name="dateDebut" required>
+        </div>
+        <div class="field">
+          <label for="heureDepartH">Heure de départ</label>
+          <div class="time-selects">
+            <select id="heureDepartH" aria-label="Heure de départ"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="dateFin">Date de fin</label>
+          <input type="date" id="dateFin" name="dateFin" required>
+        </div>
+        <div class="field">
+          <label for="heureRetourH">Heure de retour</label>
+          <div class="time-selects">
+            <select id="heureRetourH" aria-label="Heure de retour"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="km">Kilométrage prévu</label>
+        <div class="input-suffix">
+          <input type="number" id="km" name="km" min="0" step="1" inputmode="numeric" placeholder="Ex. 250" required>
+          <span class="suffix-unit">km</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" autocomplete="given-name" placeholder="Votre prénom" required>
+        </div>
+        <div class="field">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" autocomplete="family-name" placeholder="Votre nom" required>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="telephone">Téléphone <span style="opacity:.5;text-transform:none;letter-spacing:.04em">(facultatif)</span></label>
+          <input type="tel" id="telephone" name="telephone" autocomplete="tel" placeholder="06 12 34 56 78">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="vous@exemple.fr" required>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Permis — recto</label>
+          <div class="file-actions">
+            <label class="file-btn" for="permisRectoCam">📷 Prendre une photo</label>
+            <label class="file-btn" for="permisRectoFile">📁 Choisir un fichier</label>
+          </div>
+          <input type="file" id="permisRectoCam"  class="file-input" accept="image/*" capture="environment">
+          <input type="file" id="permisRectoFile" class="file-input" accept="image/*">
+          <img class="file-preview" id="permisRectoPreview" alt="Aperçu permis recto" hidden>
+        </div>
+        <div class="field">
+          <label>Permis — verso</label>
+          <div class="file-actions">
+            <label class="file-btn" for="permisVersoCam">📷 Prendre une photo</label>
+            <label class="file-btn" for="permisVersoFile">📁 Choisir un fichier</label>
+          </div>
+          <input type="file" id="permisVersoCam"  class="file-input" accept="image/*" capture="environment">
+          <input type="file" id="permisVersoFile" class="file-input" accept="image/*">
+          <img class="file-preview" id="permisVersoPreview" alt="Aperçu permis verso" hidden>
+        </div>
+      </div>
+
+      <div class="estimation">
+        <span class="estimation-label">Prix</span>
+        <span class="estimation-value" id="estimation">— €</span>
+      </div>
+      <p class="estimation-note">
+        La caution vous sera demandée par empreinte bancaire, sur place, lorsque vous prendrez possession du véhicule.<br>
+        Le titulaire de la CB devra être celui du permis de conduire.
+      </p>
+
+      <div class="resa-msg" id="resa-msg"></div>
+
+      <button type="submit" class="resa-cta" id="submit-btn"><span>Je paye avec plaisir</span></button>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">CARISME</div>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-col-title">Nous suivre</div>
+          <div class="footer-social">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+            <a href="https://www.snapchat.com/add/carterclothes" target="_blank" rel="noopener">Snapchat</a>
+            <a href="#">TikTok</a>
+          </div>
+        </div>
+        <div class="footer-contact">
+          <div class="footer-col-title">Nous contacter</div>
+          <p>
+            Orgeval, Île-de-France<br>
+            <a href="tel:+33778472798">07 78 47 27 98</a><br>
+            <a href="mailto:contact@carisme.fr">contact@carisme.fr</a>
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Informations</div>
+          <div class="footer-legal">
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="cgv.html">CGV</a>
+            <a href="politique-confidentialite.html">Politique de confidentialité</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 CARISME — Tous droits réservés</div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       LOGIQUE RÉSERVATION
+  ═══════════════════════════════════════════ -->
+  <script>
+    (function () {
+      'use strict';
+
+      var WEBHOOK = 'https://n8n.carisme.fr/webhook/carisme-reservation';
+
+      var els = {
+        constructeur: document.getElementById('resa-constructeur'),
+        modele:       document.getElementById('resa-modele'),
+        backLink:     document.getElementById('back-link'),
+        errorState:   document.getElementById('error-state'),
+        errorText:    document.getElementById('error-text'),
+        form:         document.getElementById('resa-form'),
+        dateDebut:    document.getElementById('dateDebut'),
+        heureDepartH: document.getElementById('heureDepartH'),
+        dateFin:      document.getElementById('dateFin'),
+        heureRetourH: document.getElementById('heureRetourH'),
+        km:           document.getElementById('km'),
+        prenom:       document.getElementById('prenom'),
+        nom:          document.getElementById('nom'),
+        telephone:    document.getElementById('telephone'),
+        email:        document.getElementById('email'),
+        permisRectoCam:     document.getElementById('permisRectoCam'),
+        permisRectoFile:    document.getElementById('permisRectoFile'),
+        permisVersoCam:     document.getElementById('permisVersoCam'),
+        permisVersoFile:    document.getElementById('permisVersoFile'),
+        permisRectoPreview: document.getElementById('permisRectoPreview'),
+        permisVersoPreview: document.getElementById('permisVersoPreview'),
+        estimation:   document.getElementById('estimation'),
+        msg:          document.getElementById('resa-msg'),
+        submit:       document.getElementById('submit-btn')
+      };
+
+      var slug = null;
+      var tarif = null;
+      // Photos du permis compressées (base64 pur, sans préfixe data:)
+      var permis = { recto: null, verso: null };
+
+      function showError(text) {
+        els.form.style.display = 'none';
+        els.errorText.textContent = text;
+        els.errorState.style.display = 'block';
+      }
+
+      function setMsg(text, type) {
+        els.msg.textContent = text;
+        els.msg.className = 'resa-msg show ' + type;
+      }
+      function clearMsg() {
+        els.msg.textContent = '';
+        els.msg.className = 'resa-msg';
+      }
+
+      function fmtEur(n) {
+        return n.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      }
+
+      // Aujourd'hui à minuit (local), pour comparer des dates "AAAA-MM-JJ"
+      function todayStr() {
+        var d = new Date();
+        var m = String(d.getMonth() + 1).padStart(2, '0');
+        var j = String(d.getDate()).padStart(2, '0');
+        return d.getFullYear() + '-' + m + '-' + j;
+      }
+
+      function pad2(n) { return String(n).padStart(2, '0'); }
+
+      // Remplit un <select> d'heures (min..max inclus, ex. 09..20) — option vide en tête,
+      // libellé « 09 h », valeur "09"
+      function fillHours(sel, min, max) {
+        var opts = '<option value="">--</option>';
+        for (var i = min; i <= max; i++) opts += '<option value="' + pad2(i) + '">' + pad2(i) + ' h</option>';
+        sel.innerHTML = opts;
+      }
+      function fillTimeSelects() {
+        fillHours(els.heureDepartH, 9, 20);
+        fillHours(els.heureRetourH, 9, 20);
+      }
+
+      // "HH:00" depuis un <select> d'heure seule, ou null si non choisi
+      function timeStr(hSel) {
+        if (hSel.value === '') return null;
+        return hSel.value + ':00';
+      }
+
+      // Instants complets (date + heure) de début et de fin
+      function instants() {
+        var hd = timeStr(els.heureDepartH);
+        var hr = timeStr(els.heureRetourH);
+        if (!els.dateDebut.value || !hd) return null;
+        if (!els.dateFin.value || !hr) return null;
+        var debut = new Date(els.dateDebut.value + 'T' + hd);
+        var fin   = new Date(els.dateFin.value + 'T' + hr);
+        if (isNaN(debut) || isNaN(fin)) return null;
+        return { debut: debut, fin: fin, hd: hd, hr: hr };
+      }
+
+      // Redimensionne (max 1600 px sur le grand côté) + compresse en JPEG q0.8 → base64 pur
+      function compressImage(file) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onerror = function () { reject(); };
+          reader.onload = function () {
+            var img = new Image();
+            img.onerror = function () { reject(); };
+            img.onload = function () {
+              var max = 1600, w = img.width, h = img.height;
+              if (w > h && w > max) { h = Math.round(h * max / w); w = max; }
+              else if (h >= w && h > max) { w = Math.round(w * max / h); h = max; }
+              var canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              var dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+              resolve(dataUrl);
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // Traite un fichier image choisi : compresse, stocke le base64, affiche la miniature
+      function handleFile(input, previewImg, key) {
+        var file = input.files && input.files[0];
+        // Sélection annulée : on conserve la photo déjà choisie le cas échéant
+        if (!file) return;
+        compressImage(file).then(function (dataUrl) {
+          permis[key] = dataUrl.split(',')[1]; // base64 pur, sans préfixe data:
+          previewImg.src = dataUrl;
+          previewImg.hidden = false;
+          clearMsg();
+        }).catch(function () {
+          permis[key] = null;
+          previewImg.hidden = true; previewImg.removeAttribute('src');
+          input.value = '';
+          setMsg('Impossible de traiter cette image. Merci de réessayer avec une autre photo.', 'error');
+        });
+      }
+
+      // Nb de jours facturés : arrondi au jour supérieur (48 h = 2, 48 h 01 = 3), min 1
+      function calcJours() {
+        var i = instants();
+        if (!i) return null;
+        var diffMs = i.fin - i.debut;
+        if (diffMs <= 0) return null;
+        return Math.max(1, Math.ceil(diffMs / 86400000));
+      }
+
+      function updateEstimation() {
+        if (!tarif) return;
+        var jours = calcJours();
+        var km = parseFloat(els.km.value);
+        if (isNaN(km) || km < 0) km = 0;
+        if (jours === null) {
+          els.estimation.textContent = '— €';
+          return;
+        }
+        var total = jours * tarif.jour + km * tarif.km;
+        els.estimation.textContent = fmtEur(total) + ' €';
+      }
+
+      function validate() {
+        var dd = els.dateDebut.value;
+        var df = els.dateFin.value;
+        var km = els.km.value.trim();
+        var prenom = els.prenom.value.trim();
+        var nom = els.nom.value.trim();
+        var email = els.email.value.trim();
+
+        if (!dd || !df) return 'Merci d’indiquer une date de début et une date de fin.';
+        if (!timeStr(els.heureDepartH) || !timeStr(els.heureRetourH))
+          return 'Merci d’indiquer une heure de départ et une heure de retour.';
+
+        var i = instants();
+        if (!i) return 'Merci de vérifier les dates et heures saisies.';
+        if (i.debut < new Date()) return 'Le départ ne peut pas être dans le passé.';
+        if (i.fin <= i.debut) return 'Le retour doit être postérieur au départ.';
+
+        if (km === '' || isNaN(parseFloat(km)) || parseFloat(km) < 0) return 'Merci d’indiquer un kilométrage valide (0 ou plus).';
+        if (!prenom) return 'Merci d’indiquer votre prénom.';
+        if (!nom) return 'Merci d’indiquer votre nom.';
+        // Validation email simple
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Merci d’indiquer une adresse email valide.';
+        if (!permis.recto || !permis.verso) return 'Merci d’ajouter les photos recto et verso de votre permis de conduire.';
+        return null;
+      }
+
+      function onSubmit(e) {
+        e.preventDefault();
+        clearMsg();
+
+        var err = validate();
+        if (err) { setMsg(err, 'error'); return; }
+
+        var jours = calcJours();
+        var i = instants();
+        var payload = {
+          vehicule:    slug,
+          dateDebut:   els.dateDebut.value,
+          heureDepart: i.hd,
+          dateFin:     els.dateFin.value,
+          heureRetour: i.hr,
+          jours:       jours,
+          km:          parseFloat(els.km.value),
+          prenom:      els.prenom.value.trim(),
+          nom:         els.nom.value.trim(),
+          telephone:   els.telephone.value.trim(),
+          email:       els.email.value.trim(),
+          permisRecto: permis.recto,
+          permisVerso: permis.verso
+        };
+
+        els.submit.disabled = true;
+        setMsg('Redirection vers le paiement sécurisé…', 'success');
+
+        fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json().catch(function () {
+              throw new Error('Réponse invalide du serveur.');
+            });
+          })
+          .then(function (data) {
+            if (data && data.url) {
+              window.location = data.url;
+            } else {
+              throw new Error('Lien de paiement manquant.');
+            }
+          })
+          .catch(function () {
+            setMsg('Une erreur est survenue lors de la mise en relation avec le paiement. Merci de réessayer dans un instant ou de nous contacter à contact@carisme.fr.', 'error');
+            els.submit.disabled = false;
+          });
+      }
+
+      function init() {
+        var params = new URLSearchParams(window.location.search);
+        slug = (params.get('vehicule') || '').trim().toLowerCase();
+
+        if (!slug) {
+          showError('Aucun véhicule n’a été indiqué. Choisissez un véhicule depuis notre flotte pour démarrer votre réservation.');
+          return;
+        }
+
+        fetch('config/tarifs.json', { cache: 'no-store' })
+          .then(function (res) {
+            if (!res.ok) throw new Error('config');
+            return res.json();
+          })
+          .then(function (tarifs) {
+            var entry = tarifs[slug];
+            if (!entry) {
+              showError('Le véhicule « ' + slug + ' » est introuvable. Choisissez un véhicule depuis notre flotte pour démarrer votre réservation.');
+              return;
+            }
+            tarif = entry;
+
+            document.title = 'Réserver — ' + entry.constructeur + ' ' + entry.modele + ' — CARISME';
+            els.constructeur.textContent = entry.constructeur;
+            els.modele.textContent = entry.modele;
+            els.backLink.setAttribute('href', slug + '-detail.html');
+
+            // Menus déroulants des heures
+            fillTimeSelects();
+
+            // Dates min = aujourd'hui
+            var today = todayStr();
+            els.dateDebut.min = today;
+            els.dateFin.min = today;
+
+            els.form.style.display = 'flex';
+
+            els.dateDebut.addEventListener('input', function () {
+              els.dateFin.min = els.dateDebut.value || today;
+              updateEstimation();
+            });
+            els.dateFin.addEventListener('input', updateEstimation);
+            els.km.addEventListener('input', updateEstimation);
+            [els.heureDepartH, els.heureRetourH]
+              .forEach(function (sel) { sel.addEventListener('change', updateEstimation); });
+
+            // Permis : caméra OU fichier alimentent le même emplacement (dernière source = gagnante)
+            els.permisRectoCam.addEventListener('change', function () {
+              handleFile(els.permisRectoCam, els.permisRectoPreview, 'recto');
+            });
+            els.permisRectoFile.addEventListener('change', function () {
+              handleFile(els.permisRectoFile, els.permisRectoPreview, 'recto');
+            });
+            els.permisVersoCam.addEventListener('change', function () {
+              handleFile(els.permisVersoCam, els.permisVersoPreview, 'verso');
+            });
+            els.permisVersoFile.addEventListener('change', function () {
+              handleFile(els.permisVersoFile, els.permisVersoPreview, 'verso');
+            });
+
+            els.form.addEventListener('submit', onSubmit);
+            updateEstimation();
+          })
+          .catch(function () {
+            showError('Impossible de charger les tarifs pour le moment. Merci de réessayer dans un instant.');
+          });
+      }
+
+      init();
+    })();
+  </script>
+
+  <!-- ── BANDEAU COOKIES RGPD + GOOGLE ANALYTICS (chargé après consentement) ── -->
+  <style>
+    #cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #1A1612; border-top: 1px solid rgba(184,150,90,0.35);
+      padding: 1rem 2.5rem; display: flex; align-items: center;
+      justify-content: space-between; gap: 1.5rem; z-index: 99999;
+      font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300;
+      letter-spacing: 0.04em; color: rgba(245,240,232,0.65);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #cookie-banner.cb-visible { transform: translateY(0); }
+    #cookie-banner.cb-hiding  { transform: translateY(110%); }
+    #cookie-banner p { flex: 1; margin: 0; }
+    #cookie-banner a { color: #B8965A; text-decoration: none; }
+    #cookie-banner a:hover { text-decoration: underline; cursor: pointer; }
+    .cb-btn {
+      font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; text-transform: uppercase; padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(184,150,90,0.45); background: transparent;
+      color: rgba(245,240,232,0.65); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s; white-space: nowrap;
+    }
+    .cb-btn:hover { border-color: #B8965A; color: #B8965A; }
+    .cb-btn.cb-accept { background: #B8965A; border-color: #B8965A; color: #1A1612; }
+    .cb-btn.cb-accept:hover { background: #D4AF74; border-color: #D4AF74; }
+    @media (max-width: 600px) {
+      #cookie-banner { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.5rem; }
+    }
+  </style>
+  <div id="cookie-banner">
+    <p>CARisme utilise des cookies pour améliorer votre expérience.&nbsp; <a href="politique-confidentialite.html">En savoir plus</a></p>
+    <div style="display:flex;gap:.8rem;flex-shrink:0">
+      <button class="cb-btn cb-accept" id="cb-accept">Accepter</button>
+      <button class="cb-btn"           id="cb-refuse">Refuser</button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      function loadGA() {
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Y0FLSM78CM';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-Y0FLSM78CM');
+      }
+
+      // Charge GA uniquement si l'utilisateur a déjà consenti
+      if (localStorage.getItem('carisme_cookies') === 'accepted') loadGA();
+
+      if (localStorage.getItem('carisme_cookies')) return;
+
+      var b = document.getElementById('cookie-banner');
+      b.style.display = 'flex';
+      setTimeout(function () { b.classList.add('cb-visible'); }, 120);
+      function dismiss() {
+        b.classList.add('cb-hiding');
+        b.classList.remove('cb-visible');
+        setTimeout(function () { b.style.display = 'none'; }, 520);
+      }
+      document.getElementById('cb-accept').addEventListener('click', function () {
+        localStorage.setItem('carisme_cookies', 'accepted'); loadGA(); dismiss();
+      });
+      document.getElementById('cb-refuse').addEventListener('click', function () {
+        localStorage.setItem('carisme_cookies', 'refused'); dismiss();
+      });
+    })();
+  </script>
+
+</body>
+</html>
