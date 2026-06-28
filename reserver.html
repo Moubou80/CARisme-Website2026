@@ -498,7 +498,7 @@
 
       function pad2(n) { return String(n).padStart(2, '0'); }
 
-      // Remplit un <select> d'heures (min..max inclus, ex. 09..20) — option vide en tête,
+      // Remplit un <select> d'heures (min..max inclus, ex. 09..23) — option vide en tête,
       // libellé « 09 h », valeur "09"
       function fillHours(sel, min, max) {
         var opts = '<option value="">--</option>';
@@ -506,8 +506,8 @@
         sel.innerHTML = opts;
       }
       function fillTimeSelects() {
-        fillHours(els.heureDepartH, 9, 20);
-        fillHours(els.heureRetourH, 9, 20);
+        fillHours(els.heureDepartH, 9, 23);
+        fillHours(els.heureRetourH, 9, 23);
       }
 
       // "HH:00" depuis un <select> d'heure seule, ou null si non choisi
