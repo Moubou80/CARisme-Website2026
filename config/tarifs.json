@@ -1,8 +1,44 @@
 {
   "rs3": {
     "constructeur": "Audi",
-    "modele": "RS3 Sportback TFSI Quattro 294 kW S Tronic — 400 cv",
+    "modele": "RS3 Sportback TFSI Quattro 294 kW S Tronic - 400 cv",
     "jour": 40,
     "km": 0.38
+  },
+  "a3": {
+    "constructeur": "Audi",
+    "modele": "A3 Sportback S line TFSI e 272ch S tronic",
+    "jour": 35,
+    "km": 0.30
+  },
+  "golf": {
+    "constructeur": "Volkswagen",
+    "modele": "Golf R-Line Edition 1.5 eTFSI Hybrid 150ch DSG 7",
+    "jour": 30,
+    "km": 0.30
+  },
+  "troc": {
+    "constructeur": "Volkswagen",
+    "modele": "T-Roc R-Line 1.5 eTSI Hybrid 150ch DSG 7",
+    "jour": 40,
+    "km": 0.35
+  },
+  "formentor": {
+    "constructeur": "Cupra",
+    "modele": "Formentor VZ Tribe Edition 1.5 e-Hybrid 272ch - Hybride Rechargeable",
+    "jour": 45,
+    "km": 0.37
+  },
+  "clio-noire": {
+    "constructeur": "Renault",
+    "modele": "Clio Esprit Alpine Full Hybrid E-Tech 160ch - Noire",
+    "jour": 25,
+    "km": 0.35
+  },
+  "clio-grise": {
+    "constructeur": "Renault",
+    "modele": "Clio Esprit Alpine Full Hybrid E-Tech 160ch - Gris Rafale",
+    "jour": 25,
+    "km": 0.35
   }
 }
