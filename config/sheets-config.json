@@ -3,12 +3,12 @@
   "n8n": {
     "waitlist_montres": {
       "workflow_id": "Sh8JerVvH2qTmBkl",
-      "webhook_url": "https://n8n.carisme.fr/webhook/03d23c44-0fc4-40d3-aa40-df829dc2e295",
+      "webhook_url": "https://n8n.mourad-hub.fr/webhook/03d23c44-0fc4-40d3-aa40-df829dc2e295",
       "fields": ["prenom", "email", "montre1", "montre2", "montre3"]
     },
     "waitlist_sacs": {
       "workflow_id": "3QccE144TvNNFPlK",
-      "webhook_url": "https://n8n.carisme.fr/webhook/7609be84-d668-446b-a13f-824cb3b976e8",
+      "webhook_url": "https://n8n.mourad-hub.fr/webhook/7609be84-d668-446b-a13f-824cb3b976e8",
       "fields": ["prenom", "email", "sac1", "sac2", "sac3"]
     }
   },
