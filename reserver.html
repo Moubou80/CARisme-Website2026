@@ -588,7 +588,9 @@
           els.estimation.textContent = '— €';
           return;
         }
-        var total = jours * tarif.jour + km * tarif.km;
+        // Km inclus par jour (ex. RS3 : 200 km/jour), seuls les km au-delà sont facturés
+        var kmFactures = Math.max(0, km - jours * (tarif.km_inclus || 0));
+        var total = jours * tarif.jour + kmFactures * tarif.km;
         els.estimation.textContent = fmtEur(total) + ' €';
       }
 
@@ -695,7 +697,9 @@
             document.title = 'Réserver — ' + entry.constructeur + ' ' + entry.modele + ' — CARISME';
             els.constructeur.textContent = entry.constructeur;
             els.modele.textContent = entry.modele;
-            els.backLink.setAttribute('href', slug + '-detail.html');
+            // Slugs dont la fiche porte un autre nom de fichier
+            var fiches = { 'formentor': 'cupra', 'clio-grise': 'clio-gris' };
+            els.backLink.setAttribute('href', (fiches[slug] || slug) + '-detail.html');
 
             // Menus déroulants des heures
             fillTimeSelects();

@@ -12,7 +12,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CARISME — Audi RS3 Sportback</title>
-  <meta name="description" content="CARISME — Location de véhicules · Audi RS3 Sportback TFSI Quattro 294kW · Location à la journée ou abonnement mensuel.">
+  <meta name="description" content="CARISME — Location de véhicules · Audi RS3 Sportback TFSI Quattro 294kW · Location à la journée, 200 km inclus.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -208,6 +208,20 @@
     .tarif-cta:hover::before { transform: scaleX(1); }
     .tarif-cta:hover { color: var(--cream); }
     .tarif-cta span { position: relative; z-index: 1; }
+
+    /* Colonne « message » : véhicule réservé à la location */
+    .tarif-prestige {
+      width: 100%; max-width: 320px; flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.1rem; text-align: center;
+    }
+    .tarif-prestige-mark {
+      font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--gold);
+    }
+    .tarif-prestige-line { width: 40px; height: 1px; background: var(--gold); opacity: .6; }
+    .tarif-prestige p {
+      font-size: .88rem; line-height: 1.8; color: var(--charcoal); letter-spacing: .04em;
+    }
 
     /* ──────────────────────────────────────────────
        BLOCS 3 & 4 — PHOTO + LISTE
@@ -480,15 +494,19 @@
       <ul class="tarif-items">
         <li class="highlight">
           <span>Journée</span>
-          <span>40 €</span>
+          <span>400 €</span>
         </li>
         <li>
-          <span>Kilométrage</span>
-          <span>0,38 € / km</span>
+          <span>Kilométrage inclus</span>
+          <span>200 km / jour</span>
+        </li>
+        <li>
+          <span>Km supplémentaire</span>
+          <span>2 € / km</span>
         </li>
         <li>
           <span>Caution</span>
-          <span>2 500 €</span>
+          <span>5 000 €</span>
         </li>
       </ul>
       <a href="reserver.html?vehicule=rs3" class="tarif-cta"><span>Louer</span></a>
@@ -497,33 +515,12 @@
     <div class="tarif-col">
       <div class="tarif-label">Abonnement</div>
       <h2 class="tarif-title">Je&nbsp;m'abonne</h2>
-      <ul class="tarif-items">
-        <li class="highlight">
-          <span>Mensualité</span>
-          <span>3 000 €</span>
-        </li>
-        <li>
-          <span>Kilométrage inclus</span>
-          <span>2 000 km</span>
-        </li>
-        <li>
-          <span>Km supplémentaire</span>
-          <span>0,25 € / km</span>
-        </li>
-        <li class="zero-bold">
-          <span>Engagement</span>
-          <span>0 engagement&nbsp;!</span>
-        </li>
-        <li class="zero-bold">
-          <span>Entretien</span>
-          <span>0 entretien&nbsp;!</span>
-        </li>
-        <li>
-          <span>Caution</span>
-          <span>2 500 €</span>
-        </li>
-      </ul>
-      <a href="#" class="tarif-cta"><span>S'abonner</span></a>
+      <div class="tarif-prestige">
+        <span class="tarif-prestige-mark">Véhicule de prestige</span>
+        <div class="tarif-prestige-line"></div>
+        <p>Pièce d'exception de notre flotte, l'Audi&nbsp;RS3 se vit exclusivement à&nbsp;la&nbsp;location. Aucune formule d'abonnement n'est proposée pour ce modèle.</p>
+      </div>
+      <a href="flotte-conduis.html" class="tarif-cta"><span>Voir la flotte</span></a>
     </div>
 
   </section>
