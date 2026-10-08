@@ -7,6 +7,14 @@
     "km_inclus": 200,
     "caution": 5000
   },
+  "abarth-500e": {
+    "constructeur": "Abarth",
+    "modele": "500e Cabriolet Turismo 42 kWh 114 kW - 155 cv - Vert Acide",
+    "jour": 300,
+    "km": 2,
+    "km_inclus": 200,
+    "caution": 2500
+  },
   "a3": {
     "constructeur": "Audi",
     "modele": "A3 Sportback S line TFSI e 272ch S tronic",
